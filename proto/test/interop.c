@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct {
     char* name;
@@ -32,13 +33,13 @@ void track_int(int* value, char* name) {
     num_tracking++;
 }
 
+
 void tracker_report_entry(trackable* t) {
-    char* json = malloc(128);
-    // sprintf(json, "  {\"name\": \"%s\", \"typeof\": \"%s\", \"value\": %f}", t->name, t->type, *(double*)t->value);
+    char* json = malloc(1024);
     if(strcmp(t->type, "float64") == 0) {
-        sprintf(json, "  {\"name\": \"%s\", \"typeof\": \"%s\", \"value\": %f}", t->name, t->type, *(double*)t->value);
+        sprintf(json, "  {\"name\": \"%s\", \"dataType\": \"%s\", \"data\": %f}", t->name, t->type, *(double*)t->value);
     } else if(strcmp(t->type, "int32") == 0) {
-        sprintf(json, "  {\"name\": \"%s\", \"typeof\": \"%s\", \"value\": %d}", t->name, t->type, *(int*)t->value);
+        sprintf(json, "  {\"name\": \"%s\", \"dataType\": \"%s\", \"data\": %d}", t->name, t->type, *(int*)t->value);
     }
     printf("%s", json);
 }
@@ -57,6 +58,7 @@ void tracker_report() {
 }
 
 void tracker_init() {
-    pthread_t thread;
-    pthread_create(&thread, NULL, tracker_report, NULL);
+    pthread_t *thread;
+                                 // dont ask me why this is necessary 
+    pthread_create(thread, NULL, (void *(*)(void *))tracker_report, NULL);
 }

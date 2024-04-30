@@ -1,0 +1,17 @@
+body, input {
+    font: 17px 'Hack', monospace;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background: #00010e;
+    color: #a7a7ac
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid #a7a7ac;
+    background: transparent;
+}
