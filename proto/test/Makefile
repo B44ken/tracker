@@ -1,5 +1,5 @@
 build:
-	gcc test.c interop.c -o test
+	gcc $(CURDIR)/test.c $(CURDIR)/interop.c -o test -g
 
 run: build
 	./test

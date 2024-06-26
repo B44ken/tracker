@@ -12,7 +12,7 @@ typedef struct {
 
 const double tracker_report_interval = 1.0;
 
-trackable* tracking[100];
+trackable* tracking[32];
 int num_tracking = 0;
 
 void track_double(double* value, char* name) {
@@ -53,12 +53,12 @@ void tracker_report() {
                 printf(",\n");
         }
         printf("\n]\n{TRACKER END}\n");
+        fflush(stdout);
         usleep(tracker_report_interval * 1000000);
     }
 }
 
 void tracker_init() {
-    pthread_t *thread;
-                                 // dont ask me why this is necessary 
+    pthread_t *thread = malloc(sizeof(pthread_t));
     pthread_create(thread, NULL, (void *(*)(void *))tracker_report, NULL);
 }

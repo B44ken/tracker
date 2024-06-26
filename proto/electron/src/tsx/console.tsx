@@ -10,6 +10,14 @@ export const ConsoleLogs = ({ tracking }: { tracking: Trackable[] }) => {
     </main>
 }
 
+export const StringLogs = ({ tracking }: { tracking: string[] }) => {
+    return <main>
+        <input type='text' placeholder='Search...'/>
+        {tracking.map((trackable, i) =>
+            <p key={i}>{trackable}</p>
+        )}
+    </main>
+}
 
 const LoggedTrackable = ({ trackable }: { trackable: Trackable }) => {
     const [unfolded, setUnfolded] = React.useState({});
