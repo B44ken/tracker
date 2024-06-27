@@ -52,6 +52,5 @@ export class StreamTracker implements Tracker {
 }
 
 export const trackSubprocess = (subprocess: ChildProcess) => {
-    const tracker = new StreamTracker(subprocess.stdout)
-    return tracker
+    return new StreamTracker(subprocess.stdout)
 }

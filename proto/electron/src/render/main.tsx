@@ -3,17 +3,21 @@ import React, { useEffect } from 'react'
 import {} from './bridge'
 import './main.css'
 
-window.addEventListener('DOMContentLoaded', () => {
-    window.ipcRenderer.on('test', (event: any, message: string) => {
-        console.log(message + ' (logged from renderer)')
-    })
-})
+declare const ipc: {
+    onTrack: (cb: (message: string) => void) => void
+    teardownTrack: () => void
+}
 
 export const Main = () => {
     const [messages, setMessages] = React.useState<string[]>([])
-
+    
     useEffect(() => {
-    })
+        ipc.onTrack((newMessage: string) => {
+            setMessages([...messages, JSON.stringify(newMessage)])
+        })
+
+        return ipc.teardownTrack
+    }, [messages])
 
     return <div> <StringLogs tracking={messages} /> </div>
 }
