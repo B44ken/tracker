@@ -1,4 +1,4 @@
-import { spawn, ChildProcess } from 'child_process'
+import { ChildProcess } from 'child_process'
 
 export interface Trackable {
     name: string
@@ -27,28 +27,25 @@ export class StreamTracker implements Tracker {
     constructor(stream: NodeJS.ReadableStream) {
         this.trackables = {}
         this.buffer = ''
-        stream.on('data', (data: ReadableStream) => this.bufferAppend(data))
+        stream.on('data', data => this.bufferAppend(data))
     }
 
-    logTrackable = (data: Trackable) => {
+    logTrackable = (data: Trackable) =>
         this.trackables[data.name] = data
-    }
     
-    bufferAppend = (data: ReadableStream) => {
+    bufferAppend = (data: string) => {
         this.buffer += data
         const trimmed = trimBuffer(this.buffer)
         if (trimmed == null)
             return
         this.buffer = ''
         const parsed = JSON.parse(trimmed) as Trackable[]
-        for (const trackable of parsed) {
+        for (const trackable of parsed)
             this.logTrackable(trackable)
-        }
     }
 
-    asList = () => {
-        return Object.values(this.trackables)
-    }
+    asList = () =>
+        Object.values(this.trackables)
 }
 
 export const trackSubprocess = (subprocess: ChildProcess) => {

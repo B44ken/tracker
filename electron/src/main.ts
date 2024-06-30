@@ -18,10 +18,10 @@ app.whenReady().then(() => {
   else
     win.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
 
-  const executable = spawn(path.join(__dirname, '../../../test/test'))
+  const executable = spawn(path.join(__dirname, '../../../test/PI'))
   const tracker = trackSubprocess(executable)
 
   setInterval(() => {
     win.webContents.send('track', tracker.asList())
-  }, 500)
+  }, 50)
 })
