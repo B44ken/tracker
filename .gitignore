@@ -1,3 +1,2 @@
 .vscode
-proto/test/test
-proto/electron/node_modules
+test/PI

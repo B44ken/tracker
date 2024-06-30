@@ -8,11 +8,12 @@ typedef struct {
     char* name;
     char* type;
     void* value;
+    int len;
 } trackable;
 
-const double tracker_report_interval = 1.0;
+const double tracker_report_interval = 0.05;
 
-trackable* tracking[32];
+trackable* tracking[64];
 int num_tracking = 0;
 
 void track_double(double* value, char* name) {
@@ -20,6 +21,7 @@ void track_double(double* value, char* name) {
     t->name = name;
     t->type = "float64";
     t->value = value;
+    t->len = -1;
     tracking[num_tracking] = t;
     num_tracking++;
 }
@@ -32,7 +34,6 @@ void track_int(int* value, char* name) {
     tracking[num_tracking] = t;
     num_tracking++;
 }
-
 
 void tracker_report_entry(trackable* t) {
     char* json = malloc(1024);

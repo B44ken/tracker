@@ -12,7 +12,8 @@ const config: ForgeConfig = {
     asar: true,
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  // makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [new MakerDeb({})],
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
@@ -23,10 +24,10 @@ const config: ForgeConfig = {
           entry: 'src/main.ts',
           config: 'vite.main.config.ts',
         },
-        // {
-        //   entry: 'src/preload.ts',
-        //   config: 'vite.preload.config.ts',
-        // },
+        {
+          entry: 'src/preload.ts',
+          config: 'vite.preload.config.ts',
+        }
       ],
       renderer: [
         {
