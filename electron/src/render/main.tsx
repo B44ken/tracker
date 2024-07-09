@@ -1,7 +1,7 @@
-import { ConsoleLogs, StringLogs } from './console'
+import { List } from './console'
 import React, { useEffect } from 'react'
-import './main.css'
 import { Trackable } from 'src/log'
+import './main.css'
 
 declare const ipc: {
     onTrack: (cb: (t: Trackable[]) => void) => void
@@ -9,15 +9,14 @@ declare const ipc: {
 }
 
 export const Main = () => {
-    const [tracking, setTracking] = React.useState<Trackable[]>([])
+    const [tracking, setTracking] = React.useState([])
     
     useEffect(() => {
-        ipc.onTrack((next: Trackable[]) => setTracking(next))
-
+        ipc.onTrack(setTracking)
         return ipc.teardownTrack
     }, [tracking])
 
-    return <div> <ConsoleLogs tracking={tracking} /> </div>
+    return <List tracking={tracking} />
 }
 
 export default Main

@@ -1,7 +1,7 @@
 import { Trackable } from '../log'
 import React from 'react'
 
-export const ConsoleLogs = ({ tracking }: { tracking: Trackable[] }) => {
+export const List = ({ tracking }: { tracking: Trackable[] }) => {
     return <main>
         <input type='text' placeholder='Search...'/>
         {tracking.map((trackable, i) =>
